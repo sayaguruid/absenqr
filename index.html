@@ -229,6 +229,21 @@ tailwind.config = {
 
     <!-- Users -->
     <div id="pageUsers" class="page-enter p-4 lg:p-8 hidden">
+      <!-- Tombol Sinkronisasi Data Eksternal -->
+      <div class="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600"><i class="fa-solid fa-database"></i></div>
+            <div>
+                <h3 class="text-sm font-bold text-blue-900">Data Master Eksternal</h3>
+                <p class="text-xs text-blue-700">Sinkronkan data pengguna dari Spreadsheet Database</p>
+            </div>
+        </div>
+        <button id="btnSync" class="btn btn-pri btn-sm shadow-sm" onclick="doSyncExternal()">
+            <i class="fa-solid fa-rotate"></i> <span id="syncText">Sinkronisasi Data</span>
+            <span id="syncSpinner" class="spinner" style="display:none"></span>
+        </button>
+      </div>
+
       <div class="flex flex-wrap items-center gap-3 mb-6">
         <div class="flex-1 min-w-[200px] relative"><i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-stone-300 text-sm"></i><input type="text" id="userSearch" class="input pl-9" placeholder="Cari nama pengguna..." oninput="filterUsers()"></div>
         <select id="userFilterDesa" class="input w-auto" onchange="filterUsers()"><option value="">Semua Desa</option></select>
@@ -307,7 +322,7 @@ tailwind.config = {
 /* ==============================================================
    KONFIGURASI
    ============================================================== */
-var GAS_URL = 'https://script.google.com/macros/s/AKfycbx2tj_2l3-XDg0k7AmOA2ioFblIvr3L2ztxaJXRlevFeyNnju-i62ihnPd7F7lH0tD7Ow/exec';
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbyWHCp51pp0E49_zFWRr9FAGQRMomVhhop5EtpyWRRQFjWqMgWfXH097WM3d6vKn5ai/exec';
 
 /* ==============================================================
    STATE GLOBAL
@@ -898,7 +913,7 @@ async function updateScanCount() {
 }
 
 /* ==============================================================
-   DATA PENGGUNA
+   DATA PENGGUNA & SYNC EKSTERNAL
    ============================================================== */
 async function loadUsers() {
   var r = await api('getUsers');
@@ -939,6 +954,29 @@ function filterUsers() {
   });
   h += '</div>';
   cd.innerHTML = h;
+}
+
+/* --- Sync External Function --- */
+async function doSyncExternal() {
+  var btn = document.getElementById('btnSync');
+  var txt = document.getElementById('syncText');
+  var sp = document.getElementById('syncSpinner');
+  
+  if(!confirm('Apakah Anda yakin ingin menyinkronkan data dari Spreadsheet Eksternal? Data baru akan ditambahkan.')) return;
+
+  btn.disabled = true; txt.style.display = 'none'; sp.style.display = 'inline-block';
+
+  var r = await api('syncExternal');
+
+  btn.disabled = false; txt.style.display = 'inline'; sp.style.display = 'none';
+
+  if (r.success) {
+    showToast(r.message, 'success');
+    await loadUsers(); // Refresh list
+    await loadFilters(); // Refresh filters
+  } else {
+    showToast(r.message || 'Gagal sinkronisasi', 'error');
+  }
 }
 
 /* ==============================================================
