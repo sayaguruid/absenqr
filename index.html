@@ -32,107 +32,178 @@ tailwind.config = {
     --muted: #78716C; --border: #E7E5E4;
     --success: #059669; --error: #DC2626;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
+  
   .login-bg { background: linear-gradient(135deg, #0F766E 0%, #115E59 40%, #134E4A 70%, #1a3a36 100%); position: relative; overflow: hidden; }
   .login-bg::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(20,184,166,0.15) 0%, transparent 70%); top: -200px; right: -200px; animation: float1 8s ease-in-out infinite; }
   .login-bg::after { content: ''; position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(217,119,6,0.1) 0%, transparent 70%); bottom: -100px; left: -100px; animation: float2 10s ease-in-out infinite; }
   @keyframes float1 { 0%,100%{ transform: translate(0,0); } 50%{ transform: translate(-30px,30px); } }
   @keyframes float2 { 0%,100%{ transform: translate(0,0); } 50%{ transform: translate(20px,-20px); } }
+
   .sidebar { width: 280px; min-height: 100vh; background: linear-gradient(180deg, #0F766E, #115E59); position: fixed; left: 0; top: 0; z-index: 40; transition: transform 0.3s ease; }
   .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 35; }
   .sidebar-overlay.active { display: block; }
-  @media (max-width: 1023px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } }
-  .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: rgba(255,255,255,0.65); border-radius: 10px; margin: 2px 12px; transition: all 0.2s; cursor: pointer; font-size: 14px; font-weight: 500; }
+  @media (max-width: 1023px) { .sidebar { transform: translateX(-100%); box-shadow: 4px 0 20px rgba(0,0,0,0.1); } .sidebar.open { transform: translateX(0); } }
+  
+  .nav-item { display: flex; align-items: center; gap: 12px; padding: 14px 20px; color: rgba(255,255,255,0.65); border-radius: 12px; margin: 2px 12px; transition: all 0.2s; cursor: pointer; font-size: 14px; font-weight: 500; }
+  .nav-item:active { transform: scale(0.98); }
   .nav-item:hover { color: #fff; background: rgba(255,255,255,0.08); }
-  .nav-item.active { color: #fff; background: rgba(255,255,255,0.15); font-weight: 600; }
+  .nav-item.active { color: #fff; background: rgba(255,255,255,0.15); font-weight: 600; border: 1px solid rgba(255,255,255,0.1); }
   .nav-item i { width: 20px; text-align: center; font-size: 15px; }
   .main-content { margin-left: 280px; min-height: 100vh; }
-  @media (max-width: 1023px) { .main-content { margin-left: 0; } }
-  .card { background: var(--card); border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.2s; }
-  .stat-card { background: var(--card); border-radius: 14px; padding: 20px 24px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  @media (max-width: 1023px) { .main-content { margin-left: 0; padding-bottom: 80px; } }
+
+  .card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.2s; }
+  .stat-card { background: var(--card); border-radius: 16px; padding: 20px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
   .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-  .stat-card::after { content: ''; position: absolute; top: 0; right: 0; width: 80px; height: 80px; border-radius: 0 14px 0 80px; opacity: 0.08; }
+  .stat-card::after { content: ''; position: absolute; top: 0; right: 0; width: 80px; height: 80px; border-radius: 0 16px 0 80px; opacity: 0.08; }
   .stat-card.teal::after { background: var(--pri); }
   .stat-card.amber::after { background: var(--acc); }
   .stat-card.green::after { background: var(--success); }
   .stat-card.red::after { background: var(--error); }
 
-  .scanner-container { position: relative; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 16px; overflow: hidden; background: #000; min-height: 300px; }
+  .scanner-container { position: relative; width: 100%; max-width: 400px; margin: 0 auto; border-radius: 20px; overflow: hidden; background: #000; min-height: 300px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
   #scannerReader { width: 100%; }
-  #scannerReader video { width: 100% !important; height: 100% !important; object-fit: cover !important; border-radius: 16px; background: #000; }
-  #scannerReader img { border-radius: 16px; }
-
+  #scannerReader video { width: 100% !important; height: 100% !important; object-fit: cover !important; border-radius: 20px; background: #000; }
+  
   .scanner-overlay { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
   .scanner-corners { position: absolute; inset: 15%; }
   .scanner-corners::before, .scanner-corners::after, .scanner-corner-bl::before, .scanner-corner-br::before { content: ''; position: absolute; width: 30px; height: 30px; border-color: var(--pri-light); border-style: solid; border-width: 0; }
-  .scanner-corners::before { top:0;left:0; border-top-width:3px; border-left-width:3px; border-radius:6px 0 0 0; }
-  .scanner-corners::after { top:0;right:0; border-top-width:3px; border-right-width:3px; border-radius:0 6px 0 0; }
-  .scanner-corner-bl::before { bottom:0;left:0; border-bottom-width:3px; border-left-width:3px; border-radius:0 0 0 6px; position:absolute; }
-  .scanner-corner-br::before { bottom:0;right:0; border-bottom-width:3px; border-right-width:3px; border-radius:0 0 6px 0; position:absolute; }
-  .scan-line { position: absolute; left: 15%; right: 15%; height: 2px; z-index: 3; background: linear-gradient(90deg, transparent, var(--pri-light), transparent); animation: scanMove 2.5s ease-in-out infinite; pointer-events: none; box-shadow: 0 0 12px rgba(20,184,166,0.5); }
+  .scanner-corners::before { top:0;left:0; border-top-width:4px; border-left-width:4px; border-radius:8px 0 0 0; }
+  .scanner-corners::after { top:0;right:0; border-top-width:4px; border-right-width:4px; border-radius:0 8px 0 0; }
+  .scanner-corner-bl::before { bottom:0;left:0; border-bottom-width:4px; border-left-width:4px; border-radius:0 0 0 8px; position:absolute; }
+  .scanner-corner-br::before { bottom:0;right:0; border-bottom-width:4px; border-right-width:4px; border-radius:0 0 8px 0; position:absolute; }
+  .scan-line { position: absolute; left: 15%; right: 15%; height: 3px; z-index: 3; background: linear-gradient(90deg, transparent, var(--pri-light), transparent); animation: scanMove 2.5s ease-in-out infinite; pointer-events: none; box-shadow: 0 0 12px rgba(20,184,166,0.6); }
   @keyframes scanMove { 0%,100%{ top: 15%; } 50%{ top: 82%; } }
-  .scan-success-overlay { position: absolute; inset: 0; z-index: 10; display: none; background: rgba(5,150,105,0.9); backdrop-filter: blur(4px); flex-direction: column; align-items: center; justify-content: center; border-radius: 16px; animation: fadeIn 0.3s ease; }
+  
+  /* Hardware Scanner Input Box */
+  .hardware-scan-box {
+    background: linear-gradient(135deg, #FFFFFF, #F9FAFB);
+    border: 2px dashed var(--pri);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .hardware-scan-box:focus-within {
+    border-color: var(--pri-light);
+    background: #F0FDFA;
+    box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+  }
+  .hardware-input {
+    font-family: monospace;
+    font-size: 18px;
+    text-align: center;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .hardware-input:focus {
+    border-color: var(--pri);
+    background: #fff;
+  }
+
+  .scan-success-overlay { position: absolute; inset: 0; z-index: 10; display: none; background: rgba(5,150,105,0.95); backdrop-filter: blur(4px); flex-direction: column; align-items: center; justify-content: center; border-radius: 20px; animation: fadeIn 0.3s ease; }
   .scan-success-overlay.show { display: flex; }
-  .scan-error-overlay { position: absolute; inset: 0; z-index: 10; display: none; background: rgba(220,38,38,0.85); backdrop-filter: blur(4px); flex-direction: column; align-items: center; justify-content: center; border-radius: 16px; animation: fadeIn 0.3s ease; }
+  .scan-error-overlay { position: absolute; inset: 0; z-index: 10; display: none; background: rgba(220,38,38,0.9); backdrop-filter: blur(4px); flex-direction: column; align-items: center; justify-content: center; border-radius: 20px; animation: fadeIn 0.3s ease; }
   .scan-error-overlay.show { display: flex; }
   @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  
   .checkmark-svg { width: 80px; height: 80px; }
   .checkmark-circle { stroke-dasharray: 200; stroke-dashoffset: 200; animation: drawCircle 0.6s ease forwards; }
   .checkmark-check { stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawCheck 0.4s ease 0.4s forwards; }
   @keyframes drawCircle { to { stroke-dashoffset: 0; } }
   @keyframes drawCheck { to { stroke-dashoffset: 0; } }
-  .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-  .toast { padding: 14px 20px; border-radius: 10px; color: #fff; font-size: 14px; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.15); animation: toastIn 0.3s ease; display: flex; align-items: center; gap: 10px; max-width: 360px; }
+
+  .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+  .toast { padding: 14px 20px; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.15); animation: toastIn 0.3s ease; display: flex; align-items: center; gap: 10px; max-width: 360px; pointer-events: auto; }
   .toast.success { background: #059669; }
   .toast.error { background: #DC2626; }
   .toast.warning { background: #D97706; }
   .toast.info { background: #0F766E; }
   .toast.removing { animation: toastOut 0.3s ease forwards; }
   @keyframes toastIn { from { transform: translateX(100%); opacity:0; } to { transform: translateX(0); opacity:1; } }
-  @keyframes toastOut { to { transform: translateX(100%); opacity:0; } }
+  @keyframes toastOut { to { transform: translateY(-20px); opacity:0; } }
+  
   .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(2px); }
   .modal-backdrop.show { display: flex; }
-  .modal-box { background: #fff; border-radius: 16px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; animation: modalIn 0.25s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal-box { background: #fff; border-radius: 20px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; animation: modalIn 0.25s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  @media (max-width: 640px) { .modal-box { max-width: 100%; border-radius: 20px 20px 0 0; margin-top: auto; max-height: 85vh; animation: slideUp 0.3s ease; } }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   @keyframes modalIn { from { transform: scale(0.95); opacity:0; } to { transform: scale(1); opacity:1; } }
+  
   .qr-preview-card { text-align: center; padding: 32px 24px; }
   .qr-frame { display: inline-block; padding: 16px; background: #fff; border: 2px solid var(--border); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-  .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .data-table th { text-align: left; padding: 12px 16px; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); border-bottom: 2px solid var(--border); background: #FAFAF9; }
+  
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+  .data-table th { text-align: left; padding: 12px 16px; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); border-bottom: 2px solid var(--border); background: #FAFAF9; }
   .data-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  .data-table tbody tr:hover { background: #F9FAFB; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; font-family: inherit; }
-  .btn:active { transform: scale(0.97); }
-  .btn-pri { background: var(--pri); color: #fff; }
-  .btn-pri:hover { background: var(--pri-dark); }
+  .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 14px; border: 1px solid var(--border); }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; font-family: inherit; user-select: none; }
+  .btn:active { transform: scale(0.96); }
+  .btn-pri { background: var(--pri); color: #fff; box-shadow: 0 4px 12px rgba(15,118,110,0.2); }
+  .btn-pri:hover { background: var(--pri-dark); transform: translateY(-1px); }
   .btn-acc { background: var(--acc); color: #fff; }
   .btn-acc:hover { background: var(--acc-light); }
   .btn-outline { background: transparent; color: var(--pri); border: 1.5px solid var(--pri); }
   .btn-outline:hover { background: var(--pri); color: #fff; }
-  .btn-ghost { background: transparent; color: var(--muted); padding: 8px 12px; }
+  .btn-ghost { background: transparent; color: var(--muted); padding: 10px 16px; }
   .btn-ghost:hover { background: #F5F5F4; color: var(--text); }
-  .btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
-  .input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; font-family: inherit; transition: border-color 0.2s, box-shadow 0.2s; background: #fff; color: var(--text); }
-  .input:focus { outline: none; border-color: var(--pri); box-shadow: 0 0 0 3px rgba(15,118,110,0.1); }
+  .btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 10px; }
+  
+  .input { width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 12px; font-size: 15px; font-family: inherit; transition: border-color 0.2s, box-shadow 0.2s; background: #fff; color: var(--text); -webkit-appearance: none; }
+  .input:focus { outline: none; border-color: var(--pri); box-shadow: 0 0 0 4px rgba(15,118,110,0.1); }
   .input::placeholder { color: #A8A29E; }
-  select.input { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2378716C'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
-  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  select.input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2378716C'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+  
+  .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .badge-teal { background: #CCFBF1; color: #0F766E; }
   .badge-amber { background: #FEF3C7; color: #B45309; }
   .badge-green { background: #D1FAE5; color: #065F46; }
   .badge-red { background: #FEE2E2; color: #991B1B; }
+  
   .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
   .empty-state i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
-  .user-card { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .user-card { display: flex; align-items: center; gap: 12px; padding: 16px; border-bottom: 1px solid var(--border); }
   .user-card:hover { background: #FAFAF9; }
-  .user-avatar { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #fff; flex-shrink: 0; }
-  ::-webkit-scrollbar { width: 6px; }
+  .user-avatar { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: #fff; flex-shrink: 0; }
+  
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-thumb { background: #D6D3D1; border-radius: 3px; }
+  
   .spinner { width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; display: inline-block; vertical-align: middle; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .page-enter { animation: pageIn 0.3s ease; }
   @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  
+  /* Jenjang Chip/Select Styles */
+  .jenjang-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 15px; }
+  .jenjang-chip {
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 2px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+  }
+  .jenjang-chip:hover { border-color: var(--pri-light); color: var(--pri); }
+  .jenjang-chip.active {
+      background: var(--pri);
+      color: #fff;
+      border-color: var(--pri);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+  }
+
   .lib-warning { background: linear-gradient(135deg, #FEF3C7, #FDE68A); border: 1px solid #F59E0B; border-radius: 12px; padding: 16px 20px; display: flex; align-items: flex-start; gap: 12px; }
   .lib-warning i { font-size: 24px; color: #D97706; flex-shrink: 0; margin-top: 2px; }
   .lib-warning p { font-size: 14px; color: #92400E; line-height: 1.5; margin: 0; }
@@ -151,20 +222,20 @@ tailwind.config = {
 <div id="pageLogin" class="login-bg min-h-screen flex items-center justify-center p-4">
   <div class="relative z-10 w-full max-w-md">
     <div class="text-center mb-8">
-      <div class="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur rounded-2xl mb-4 border border-white/10"><i class="fa-solid fa-qrcode text-2xl text-white"></i></div>
-      <h1 class="text-3xl font-extrabold text-white tracking-tight">Absensi QR</h1>
-      <p class="text-white/50 mt-2 text-sm">Sistem Kehadiran Digital</p>
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur rounded-3xl mb-6 border border-white/10"><i class="fa-solid fa-qrcode text-3xl text-white"></i></div>
+      <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Absensi QR</h1>
+      <p class="text-white/50 text-sm">Sistem Kehadiran Digital</p>
     </div>
-    <div class="bg-white rounded-2xl p-8 shadow-2xl">
-      <h2 class="text-lg font-bold mb-6">Masuk ke Akun</h2>
-      <div class="space-y-4">
-        <div><label class="block text-sm font-semibold text-stone-600 mb-1.5">Username</label><input type="text" id="loginUser" class="input" placeholder="Masukkan username" autocomplete="username"></div>
-        <div><label class="block text-sm font-semibold text-stone-600 mb-1.5">Password</label><input type="password" id="loginPass" class="input" placeholder="Masukkan password" autocomplete="current-password"></div>
-        <button id="btnLogin" class="btn btn-pri w-full justify-center mt-2" onclick="doLogin()"><span id="loginText">Masuk</span><span id="loginSpinner" class="spinner" style="display:none"></span></button>
+    <div class="bg-white rounded-3xl p-8 shadow-2xl">
+      <h2 class="text-xl font-bold mb-6 text-stone-800">Masuk ke Akun</h2>
+      <div class="space-y-5">
+        <div><label class="block text-sm font-semibold text-stone-600 mb-2">Username</label><input type="text" id="loginUser" class="input" placeholder="Masukkan username" autocomplete="username"></div>
+        <div><label class="block text-sm font-semibold text-stone-600 mb-2">Password</label><input type="password" id="loginPass" class="input" placeholder="Masukkan password" autocomplete="current-password"></div>
+        <button id="btnLogin" class="btn btn-pri w-full justify-center mt-4 shadow-lg" onclick="doLogin()"><span id="loginText">Masuk</span><span id="loginSpinner" class="spinner" style="display:none"></span></button>
       </div>
-      <div id="loginError" class="hidden mt-4 p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-100"><i class="fa-solid fa-circle-exclamation mr-1"></i><span id="loginErrorMsg"></span></div>
+      <div id="loginError" class="hidden mt-6 p-4 bg-red-50 text-red-700 text-sm rounded-xl border border-red-100"><i class="fa-solid fa-circle-exclamation mr-2"></i><span id="loginErrorMsg"></span></div>
     </div>
-    <p class="text-center text-white/30 text-xs mt-6">Hubungi admin untuk mendapatkan akun</p>
+    <p class="text-center text-white/30 text-xs mt-8">Hubungi admin untuk mendapatkan akun</p>
   </div>
 </div>
 
@@ -172,38 +243,42 @@ tailwind.config = {
 <div id="appMain" class="hidden">
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
   <aside class="sidebar" id="sidebar">
-    <div class="p-6 pb-4"><div class="flex items-center gap-3"><div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/10"><i class="fa-solid fa-qrcode text-white text-lg"></i></div><div><div class="text-white font-bold text-sm">Absensi QR</div><div class="text-white/40 text-xs">Sistem Kehadiran</div></div></div></div>
-    <div class="px-3 mt-2">
-      <div class="text-white/30 text-[10px] font-bold uppercase tracking-widest px-5 mb-2">Menu</div>
+    <div class="p-6 pb-2"><div class="flex items-center gap-3"><div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/10"><i class="fa-solid fa-qrcode text-white text-xl"></i></div><div><div class="text-white font-bold text-base">Absensi QR</div><div class="text-white/40 text-xs">Sistem Kehadiran</div></div></div></div>
+    <div class="px-3 mt-4">
+      <div class="text-white/30 text-[10px] font-bold uppercase tracking-widest px-5 mb-2">Menu Utama</div>
       <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')"><i class="fa-solid fa-chart-pie"></i> Dashboard</div>
       <div class="nav-item" data-page="scan" onclick="navigate('scan')"><i class="fa-solid fa-camera"></i> Scan Absensi</div>
       <div class="nav-item" data-page="users" onclick="navigate('users')"><i class="fa-solid fa-users"></i> Data Pengguna</div>
       <div class="nav-item" data-page="history" onclick="navigate('history')"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat</div>
     </div>
-    <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-white/10">
-      <div class="flex items-center gap-3 px-2 mb-3"><div class="w-9 h-9 bg-white/15 rounded-lg flex items-center justify-center text-white text-sm font-bold" id="sidebarAvatar">AD</div><div class="flex-1 min-w-0"><div class="text-white text-sm font-semibold truncate" id="sidebarName">Admin</div><div class="text-white/40 text-xs truncate" id="sidebarLevel">Daerah</div></div></div>
+    <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 bg-gradient-to-t from-black/20">
+      <div class="flex items-center gap-3 px-2 mb-4"><div class="w-10 h-10 bg-white/15 rounded-xl flex items-center justify-center text-white text-sm font-bold" id="sidebarAvatar">AD</div><div class="flex-1 min-w-0"><div class="text-white text-sm font-bold truncate" id="sidebarName">Admin</div><div class="text-white/40 text-xs truncate" id="sidebarLevel">Daerah</div></div></div>
       <button class="nav-item w-full justify-center text-red-300 hover:text-red-200 hover:bg-red-500/15" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
     </div>
   </aside>
   <div class="main-content">
-    <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-lg border-b border-stone-200/80">
+    <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-lg border-b border-stone-200/80 shadow-sm">
       <div class="flex items-center justify-between px-4 lg:px-8 h-16">
-        <div class="flex items-center gap-3"><button class="lg:hidden btn-ghost rounded-lg" onclick="toggleSidebar()"><i class="fa-solid fa-bars text-lg"></i></button><h2 class="text-lg font-bold" id="pageTitle">Dashboard</h2></div>
-        <div class="flex items-center gap-2"><span id="qrLibIndicator" class="lib-status loading">QR: loading</span><span class="badge badge-teal text-xs" id="topBadge">Daerah</span><span class="text-xs text-stone-400 hidden sm:inline" id="topDaerah"></span></div>
+        <div class="flex items-center gap-3">
+            <button class="lg:hidden btn-ghost rounded-xl" onclick="toggleSidebar()"><i class="fa-solid fa-bars text-lg"></i></button>
+            <h2 class="text-lg font-bold" id="pageTitle">Dashboard</h2>
+        </div>
+        <div class="flex items-center gap-2">
+            <span id="qrLibIndicator" class="lib-status loading hidden sm:inline">QR: loading</span>
+            <span class="badge badge-teal text-xs" id="topBadge">Daerah</span>
+        </div>
       </div>
     </header>
 
-    <!-- Banner warning jika library QR gagal -->
     <div id="libWarning" class="hidden p-4 lg:p-8">
       <div class="lib-warning"><i class="fa-solid fa-triangle-exclamation"></i><div><p><strong>Library QR Code gagal dimuat.</strong></p><p style="margin-top:4px">Pastikan perangkat terhubung internet, lalu <a href="javascript:retryLoadQRLib()">coba muat ulang library</a> atau <a href="javascript:location.reload()">refresh halaman</a>.</p><p style="margin-top:4px;font-size:12px;color:#B45309" id="libDebugInfo"></p></div></div>
     </div>
 
     <!-- Dashboard -->
     <div id="pageDashboard" class="page-enter p-4 lg:p-8">
-      <div class="flex flex-wrap items-center gap-3 mb-6">
-        <input type="date" id="dashDate" class="input w-auto" onchange="loadDashboard()">
-        <!-- FILTER JENJANG BARU -->
-        <select id="dashJenjang" class="input w-auto" onchange="loadDashboard()">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6 bg-white p-4 rounded-2xl border border-stone-200">
+        <input type="date" id="dashDate" class="input w-full sm:w-auto" onchange="loadDashboard()">
+        <select id="dashJenjang" class="input w-full sm:w-auto" onchange="loadDashboard()">
             <option value="">Semua Jenjang</option>
             <option value="PAUD">PAUD</option>
             <option value="CABERAWIT">Caberawit</option>
@@ -211,51 +286,76 @@ tailwind.config = {
             <option value="REMAJA">Remaja</option>
             <option value="PRA NIKAH">Pra Nikah</option>
         </select>
-        <select id="dashDesa" class="input w-auto hidden" onchange="loadDashboard()"><option value="">Semua Desa</option></select>
+        <select id="dashDesa" class="input w-full sm:w-auto hidden" onchange="loadDashboard()"><option value="">Semua Desa</option></select>
       </div>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8" id="dashStats"></div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8" id="dashStats"></div>
+      
       <div class="grid lg:grid-cols-5 gap-6 mb-8">
         <div class="card p-6 lg:col-span-3"><h3 class="font-bold text-sm mb-4">Kehadiran per Kelompok</h3><div style="height:280px"><canvas id="chartBar"></canvas></div></div>
-        <div class="card p-6 lg:col-span-2"><h3 class="font-bold text-sm mb-4">Ringkasan</h3><div style="height:220px;display:flex;align-items:center;justify-content:center"><canvas id="chartDonut"></canvas></div><div class="text-center mt-2"><span class="text-2xl font-extrabold" id="donutPercent">0%</span><span class="text-sm text-stone-400 ml-1">kehadiran</span></div></div>
+        <div class="card p-6 lg:col-span-2 flex flex-col items-center justify-center"><h3 class="font-bold text-sm mb-4 self-start">Ringkasan</h3><div style="height:220px;width:100%;display:flex;align-items:center;justify-content:center"><canvas id="chartDonut"></canvas></div><div class="text-center mt-2"><span class="text-3xl font-extrabold" id="donutPercent">0%</span><span class="text-sm text-stone-400 ml-1">kehadiran</span></div></div>
       </div>
-      <div class="card overflow-hidden"><div class="p-5 border-b border-stone-100"><h3 class="font-bold text-sm">Detail per Kelompok</h3></div><div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Desa</th><th>Kelompok</th><th>Total</th><th>Hadir</th><th>Belum</th><th>Persentase</th></tr></thead><tbody id="dashTableBody"></tbody></table></div></div>
-      <div class="card mt-6 overflow-hidden"><div class="p-5 border-b border-stone-100"><h3 class="font-bold text-sm">Absensi Terbaru</h3></div><div id="dashRecent" class="divide-y divide-stone-100"></div></div>
+      
+      <div class="card overflow-hidden mb-8"><div class="p-5 border-b border-stone-100"><h3 class="font-bold text-sm">Detail per Kelompok</h3></div><div class="table-container"><table class="data-table"><thead><tr><th>Desa</th><th>Kelompok</th><th>Total</th><th>Hadir</th><th>Belum</th><th>Persentase</th></tr></thead><tbody id="dashTableBody"></tbody></table></div></div>
+      
+      <div class="card overflow-hidden"><div class="p-5 border-b border-stone-100"><h3 class="font-bold text-sm">Absensi Terbaru</h3></div><div id="dashRecent" class="divide-y divide-stone-100"></div></div>
     </div>
 
     <!-- Scan -->
     <div id="pageScan" class="page-enter p-4 lg:p-8 hidden">
-      <!-- Pemilihan Target Jenjang Untuk Acara -->
-      <div class="max-w-lg mx-auto mb-4">
-          <label class="block text-sm font-bold text-stone-700 mb-1"><i class="fa-solid fa-bullseye mr-1"></i> Target Acara (Jenjang)</label>
-          <select id="scanTargetJenjang" class="input">
-              <option value="">Pilih Jenjang Peserta...</option>
-              <option value="PAUD">PAUD</option>
-              <option value="CABERAWIT">Caberawit</option>
-              <option value="PRA REMAJA">Pra Remaja</option>
-              <option value="REMAJA">Remaja</option>
-              <option value="PRA NIKAH">Pra Nikah</option>
-          </select>
-          <p class="text-xs text-stone-500 mt-1">Hanya peserta dengan jenjang sesuai yang dapat di-scan.</p>
+      <!-- FIX 1: Tanggal Picker di Scan Page -->
+      <div class="max-w-lg mx-auto mb-6">
+          <label class="block text-sm font-bold text-stone-700 mb-2"><i class="fa-regular fa-calendar-days mr-1"></i> Tanggal Acara</label>
+          <input type="date" id="scanDate" class="input text-lg font-semibold" onchange="updateScanCount()">
       </div>
 
-      <div class="max-w-lg mx-auto">
+      <!-- FIX 2: Multi Select Jenjang -->
+      <div class="max-w-lg mx-auto mb-6">
+          <label class="block text-sm font-bold text-stone-700 mb-2"><i class="fa-solid fa-crosshairs mr-1"></i> Target Acara (Jenjang)</label>
+          <div class="jenjang-container">
+              <button class="jenjang-chip" data-val="PAUD" onclick="toggleJenjang(this)">PAUD</button>
+              <button class="jenjang-chip" data-val="CABERAWIT" onclick="toggleJenjang(this)">Caberawit</button>
+              <button class="jenjang-chip" data-val="PRA REMAJA" onclick="toggleJenjang(this)">Pra Remaja</button>
+              <button class="jenjang-chip" data-val="REMAJA" onclick="toggleJenjang(this)">Remaja</button>
+              <button class="jenjang-chip" data-val="PRA NIKAH" onclick="toggleJenjang(this)">Pra Nikah</button>
+          </div>
+          <p class="text-xs text-stone-500 bg-yellow-50 p-2 rounded-lg border border-yellow-100 text-center"><i class="fa-solid fa-circle-info mr-1"></i> Centang lebih dari satu untuk acara gabungan.</p>
+      </div>
+
+      <div class="max-w-lg mx-auto space-y-6">
         <div class="scanner-container" id="scannerBox">
           <div id="scannerReader"></div>
           <div class="scanner-overlay"><div class="scanner-corners"><div class="scanner-corner-bl" style="position:absolute;bottom:0;left:0;width:30px;height:30px;"></div><div class="scanner-corner-br" style="position:absolute;bottom:0;right:0;width:30px;height:30px;"></div></div><div class="scan-line" id="scanLine"></div></div>
           <div class="scan-success-overlay" id="scanSuccess"><svg class="checkmark-svg" viewBox="0 0 80 80"><circle class="checkmark-circle" cx="40" cy="40" r="32" fill="none" stroke="#fff" stroke-width="3"/><path class="checkmark-check" d="M24 42 L35 52 L56 30" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="text-white font-extrabold text-xl mt-4" id="scanSuccessName"></div><div class="text-white/70 text-sm mt-1" id="scanSuccessInfo"></div><div class="text-white/50 text-xs mt-1" id="scanSuccessTime"></div><button class="btn bg-white/20 text-white mt-6 backdrop-blur border border-white/30" onclick="resumeScan()"><i class="fa-solid fa-camera"></i> Lanjut Scan</button></div>
           <div class="scan-error-overlay" id="scanError"><i class="fa-solid fa-xmark text-white text-5xl"></i><div class="text-white font-bold text-lg mt-4" id="scanErrorMsg"></div><button class="btn bg-white/20 text-white mt-6 backdrop-blur border border-white/30" onclick="resumeScan()"><i class="fa-solid fa-camera"></i> Coba Lagi</button></div>
         </div>
-        <div class="text-center mt-6"><p class="text-sm text-stone-400">Arahkan kamera ke QR Code untuk absensi</p><div class="flex justify-center gap-3 mt-4"><button class="btn btn-outline btn-sm" onclick="toggleTorch()" id="btnTorch"><i class="fa-solid fa-bolt"></i> Flash</button><button class="btn btn-ghost btn-sm" onclick="switchCamera()"><i class="fa-solid fa-rotate"></i> Ganti Kamera</button></div></div>
-        <div class="card mt-6 p-4"><div class="flex items-center justify-between"><span class="text-sm font-semibold text-stone-500">Sudah absen hari ini</span><span class="text-xl font-extrabold" style="color:var(--pri)" id="scanCount">0</span></div></div>
+
+        <!-- Hardware Scanner Input -->
+        <div class="hardware-scan-box">
+            <div class="flex items-center justify-center gap-2 mb-3 text-teal-800 font-bold">
+                <i class="fa-solid fa-keyboard"></i> Input Alat Scanner / Manual
+            </div>
+            <input type="text" id="hardwareScanInput" class="hardware-input" placeholder="Tempel QR disini atau ketik ID..." autocomplete="off">
+            <p class="text-xs text-stone-500 mt-2">Tekan <strong>ENTER</strong> setelah scan/ketik.</p>
+        </div>
+
+        <div class="flex justify-center gap-4">
+            <button class="btn btn-outline btn-sm" onclick="toggleTorch()" id="btnTorch"><i class="fa-solid fa-bolt"></i> Flash</button>
+            <button class="btn btn-ghost btn-sm" onclick="switchCamera()"><i class="fa-solid fa-rotate"></i> Ganti Kamera</button>
+        </div>
+        
+        <div class="card p-4 flex items-center justify-between bg-white">
+            <span class="text-sm font-semibold text-stone-500">Sudah absen</span>
+            <span class="text-2xl font-extrabold text-teal-600" id="scanCount">0</span>
+        </div>
       </div>
     </div>
 
     <!-- Users -->
     <div id="pageUsers" class="page-enter p-4 lg:p-8 hidden">
-      <!-- Tombol Sinkronisasi Data Eksternal -->
-      <div class="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div class="mb-6 p-5 bg-blue-50 border border-blue-100 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600"><i class="fa-solid fa-database"></i></div>
+            <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600"><i class="fa-solid fa-database"></i></div>
             <div>
                 <h3 class="text-sm font-bold text-blue-900">Data Master Eksternal</h3>
                 <p class="text-xs text-blue-700">Sinkronkan data pengguna dari Spreadsheet Database</p>
@@ -267,24 +367,27 @@ tailwind.config = {
         </button>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3 mb-6">
-        <div class="flex-1 min-w-[200px] relative"><i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-stone-300 text-sm"></i><input type="text" id="userSearch" class="input pl-9" placeholder="Cari nama pengguna..." oninput="filterUsers()"></div>
-        <select id="userFilterDesa" class="input w-auto" onchange="filterUsers()"><option value="">Semua Desa</option></select>
-        <select id="userFilterKel" class="input w-auto" onchange="filterUsers()"><option value="">Semua Kelompok</option></select>
-        <button class="btn btn-pri" onclick="openAddUserModal()"><i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Tambah</span></button>
-        <button class="btn btn-acc" onclick="printAllQR()"><i class="fa-solid fa-print"></i> <span class="hidden sm:inline">Cetak Semua QR</span></button>
+      <div class="flex flex-col sm:flex-row items-stretch gap-3 mb-6">
+        <div class="flex-1 relative"><i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-stone-300 text-sm"></i><input type="text" id="userSearch" class="input pl-10" placeholder="Cari nama pengguna..." oninput="filterUsers()"></div>
+        <select id="userFilterDesa" class="input w-full sm:w-auto" onchange="filterUsers()"><option value="">Semua Desa</option></select>
+        <select id="userFilterKel" class="input w-full sm:w-auto" onchange="filterUsers()"><option value="">Semua Kelompok</option></select>
+        <div class="flex gap-2 sm:w-auto w-full">
+            <button class="btn btn-pri flex-1 sm:flex-none" onclick="openAddUserModal()"><i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Tambah</span></button>
+            <button class="btn btn-acc flex-1 sm:flex-none" onclick="printAllQR()"><i class="fa-solid fa-print"></i> <span class="hidden sm:inline">Cetak QR</span></button>
+        </div>
       </div>
+      
       <div class="card overflow-hidden" id="usersListCard"></div>
     </div>
 
     <!-- History -->
     <div id="pageHistory" class="page-enter p-4 lg:p-8 hidden">
-      <div class="flex flex-wrap items-center gap-3 mb-6">
-        <input type="date" id="histDate" class="input w-auto" onchange="loadHistory()">
-        <select id="histDesa" class="input w-auto hidden" onchange="loadHistory()"><option value="">Semua Desa</option></select>
-        <select id="histKel" class="input w-auto" onchange="loadHistory()"><option value="">Semua Kelompok</option></select>
+      <div class="flex flex-col sm:flex-row items-stretch gap-3 mb-6">
+        <input type="date" id="histDate" class="input w-full sm:w-auto" onchange="loadHistory()">
+        <select id="histDesa" class="input w-full sm:w-auto hidden" onchange="loadHistory()"><option value="">Semua Desa</option></select>
+        <select id="histKel" class="input w-full sm:w-auto" onchange="loadHistory()"><option value="">Semua Kelompok</option></select>
       </div>
-      <div class="card overflow-hidden"><div class="overflow-x-auto"><table class="data-table"><thead><tr><th>No</th><th>Nama</th><th>Desa</th><th>Kelompok</th><th>Jenjang</th><th>Waktu</th><th>Scanner</th></tr></thead><tbody id="histBody"></tbody></table></div><div id="histEmpty" class="empty-state hidden"><i class="fa-solid fa-inbox block"></i><p class="font-semibold">Belum ada data absensi</p></div></div>
+      <div class="card overflow-hidden"><div class="table-container"><table class="data-table"><thead><tr><th>No</th><th>Nama</th><th>Desa</th><th>Kelompok</th><th>Jenjang</th><th>Waktu</th><th>Scanner</th></tr></thead><tbody id="histBody"></tbody></table></div><div id="histEmpty" class="empty-state hidden"><i class="fa-solid fa-inbox block"></i><p class="font-semibold">Belum ada data absensi</p></div></div>
     </div>
   </div>
 </div>
@@ -292,7 +395,7 @@ tailwind.config = {
 <!-- MODAL: QR Preview -->
 <div class="modal-backdrop" id="modalQR">
   <div class="modal-box">
-    <div class="flex items-center justify-between p-5 border-b border-stone-100"><h3 class="font-bold">QR Code Absensi</h3><button class="btn-ghost rounded-lg" onclick="closeModal('modalQR')"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="flex items-center justify-between p-5 border-b border-stone-100"><h3 class="font-bold">QR Code Absensi</h3><button class="btn-ghost rounded-xl" onclick="closeModal('modalQR')"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="qr-preview-card">
       <div class="qr-frame"><canvas id="qrCanvas" style="width:220px;height:220px;display:block;"></canvas></div>
       <div class="mt-4"><div class="text-lg font-bold" id="qrName"></div><div class="text-sm text-stone-400" id="qrInfo"></div></div>
@@ -308,7 +411,7 @@ tailwind.config = {
 <!-- MODAL: Add User -->
 <div class="modal-backdrop" id="modalAddUser">
   <div class="modal-box">
-    <div class="flex items-center justify-between p-5 border-b border-stone-100"><h3 class="font-bold">Tambah Pengguna</h3><button class="btn-ghost rounded-lg" onclick="closeModal('modalAddUser')"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="flex items-center justify-between p-5 border-b border-stone-100"><h3 class="font-bold">Tambah Pengguna</h3><button class="btn-ghost rounded-xl" onclick="closeModal('modalAddUser')"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="p-5 space-y-4">
       <div><label class="block text-sm font-semibold text-stone-600 mb-1.5">Nama Lengkap</label><input type="text" id="addUserName" class="input" placeholder="Masukkan nama lengkap"></div>
       <div id="addDesaWrap" class="hidden"><label class="block text-sm font-semibold text-stone-600 mb-1.5">Desa</label><select id="addUserDesa" class="input"></select></div>
@@ -333,7 +436,7 @@ tailwind.config = {
 <!-- MODAL: Edit User -->
 <div class="modal-backdrop" id="modalEditUser">
   <div class="modal-box">
-    <div class="flex items-center justify-between p-5 border-b border-stone-100"><h3 class="font-bold">Edit Pengguna</h3><button class="btn-ghost rounded-lg" onclick="closeModal('modalEditUser')"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="flex items-center justify-between p-5 border-b border-stone-100"><h3 class="font-bold">Edit Pengguna</h3><button class="btn-ghost rounded-xl" onclick="closeModal('modalEditUser')"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="p-5 space-y-4">
       <input type="hidden" id="editUserId">
       <div><label class="block text-sm font-semibold text-stone-600 mb-1.5">Nama</label><input type="text" id="editUserName" class="input"></div>
@@ -372,7 +475,8 @@ var S = {
   admin: null, page: 'dashboard', users: [], filters: null,
   chartBar: null, chartDonut: null, scanner: null, scanning: false,
   torchOn: false, facingMode: 'environment',
-  currentQRUser: null, currentQRDataUrl: null
+  currentQRUser: null, currentQRDataUrl: null,
+  selectedJenjangs: [] // Array to store multiple selections
 };
 
 var scanLock = false;
@@ -617,11 +721,12 @@ function enterApp() {
   document.getElementById('sidebarName').textContent = S.admin.nama;
   document.getElementById('sidebarLevel').textContent = S.admin.level === 'daerah' ? 'Admin Daerah' : 'Admin Desa ' + (S.admin.desa || '');
   document.getElementById('topBadge').textContent = S.admin.level === 'daerah' ? 'Daerah' : 'Desa';
-  document.getElementById('topDaerah').textContent = (S.admin.daerah || '') + (S.admin.desa ? ' - ' + S.admin.desa : '');
 
   var t = todayStr();
   document.getElementById('dashDate').value = t;
   document.getElementById('histDate').value = t;
+  // Default Scan Date to Today
+  document.getElementById('scanDate').value = t;
 
   loadFilters().then(function() { navigate('dashboard'); });
 }
@@ -648,7 +753,13 @@ function navigate(page) {
 
   var pm = {
     dashboard: { id:'pageDashboard', title:'Dashboard', load: loadDashboard },
-    scan:      { id:'pageScan',      title:'Scan Absensi', load: function() { updateScanCount(); setTimeout(startScanner, 200); } },
+    scan:      { id:'pageScan',      title:'Scan Absensi', load: function() { 
+        updateScanCount(); 
+        setTimeout(function(){ 
+            document.getElementById('hardwareScanInput').focus();
+            startScanner(); 
+        }, 300); 
+    } },
     users:     { id:'pageUsers',     title:'Data Pengguna', load: loadUsers },
     history:   { id:'pageHistory',   title:'Riwayat Absensi', load: loadHistory }
   };
@@ -665,7 +776,7 @@ function navigate(page) {
 
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebarOverlay').classList.toggle('active');
+  document.getElementById('sidebarOverlay').toggleClass('active');
 }
 
 function closeSidebar() {
@@ -721,10 +832,10 @@ function updateKelompokOptions() {
 document.getElementById('userFilterDesa').addEventListener('change', function() { updateKelompokOptions(); filterUsers(); });
 document.getElementById('histDesa').addEventListener('change', function() { updateKelompokOptions(); loadHistory(); });
 
-/* DASHBOARD - Updated with Jenjang Filter */
+/* DASHBOARD */
 async function loadDashboard() {
   var tgl = document.getElementById('dashDate').value;
-  var jenjang = document.getElementById('dashJenjang').value; // Ambil filter jenjang
+  var jenjang = document.getElementById('dashJenjang').value; 
   var desaEl = document.getElementById('dashDesa');
   var desa = desaEl ? desaEl.value : '';
   
@@ -788,6 +899,56 @@ async function loadDashboard() {
   }
 }
 
+/* ================= LOGIKA SCAN MULTI-JENJANG & TANGGAL ================= */
+function toggleJenjang(btn) {
+    var val = btn.getAttribute('data-val');
+    if (S.selectedJenjangs.includes(val)) {
+        // Hapus jika sudah ada
+        S.selectedJenjangs = S.selectedJenjangs.filter(function(j){ return j !== val; });
+        btn.classList.remove('active');
+    } else {
+        // Tambah jika belum ada
+        S.selectedJenjangs.push(val);
+        btn.classList.add('active');
+    }
+}
+
+/* ================= HARDWARE SCANNER LOGIC ================= */
+document.getElementById('hardwareScanInput').addEventListener('keydown', async function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        var val = this.value.trim();
+        if(!val) return;
+
+        var qrData = val.startsWith('ABSEN:') ? val : 'ABSEN:' + val;
+
+        this.value = ''; // Clear input immediately
+        this.disabled = true;
+
+        // Ambil Tanggal yang dipilih di halaman scan
+        var scanDateVal = document.getElementById('scanDate').value;
+
+        try {
+            playBeep(880, 100);
+            // Kirim targetJenjang sebagai array dan scanDate
+            var r = await api('scan', { qrData: qrData, targetJenjang: S.selectedJenjangs, tanggal: scanDateVal });
+            if (r.success) {
+                playBeep(1100, 150);
+                showToast('Berhasil: ' + r.data.nama, 'success');
+                updateScanCount();
+            } else {
+                playBeep(300, 300);
+                showToast(r.message || 'Gagal mencatat absensi', 'error');
+            }
+        } catch(e) {
+            showToast('Terjadi kesalahan koneksi', 'error');
+        } finally {
+            this.disabled = false;
+            this.focus(); // Refocus for next scan
+        }
+    }
+});
+
 /* SCANNER — Lifecycle */
 async function startScanner() {
   if (scannerStarting) return;
@@ -810,7 +971,7 @@ async function startScanner() {
     );
   } catch(e) {
     S.scanning = false; S.scanner = null;
-    showToast('Gagal mengakses kamera: ' + (e.message || e), 'error');
+    console.error(e);
   } finally {
     scannerStarting = false;
   }
@@ -844,10 +1005,9 @@ async function onScanSuccess(decodedText) {
   playBeep(880, 100); vibrate();
 
   try {
-    // Ambil target jenjang dari dropdown scan page
-    var targetJenjang = document.getElementById('scanTargetJenjang').value;
-    
-    var r = await api('scan', { qrData: decodedText, targetJenjang: targetJenjang });
+    var scanDateVal = document.getElementById('scanDate').value;
+
+    var r = await api('scan', { qrData: decodedText, targetJenjang: S.selectedJenjangs, tanggal: scanDateVal });
     if (r.success) {
       playBeep(1100, 150);
       showScanSuccess(r.data);
@@ -910,7 +1070,12 @@ async function switchCamera() {
 }
 
 async function updateScanCount() {
-  var r = await api('getAttendance', { tanggal: todayStr() });
+  // Gunakan tanggal yang dipilih di halaman scan, bukan hari ini (todayStr())
+  // Ini memperbaiki masalah "0" jika tanggal di database beda
+  var scanDateVal = document.getElementById('scanDate').value;
+  if(!scanDateVal) return;
+
+  var r = await api('getAttendance', { tanggal: scanDateVal });
   if (r.success) { var el = document.getElementById('scanCount'); if (el) el.textContent = r.data.length; }
 }
 
@@ -999,68 +1164,57 @@ async function showQR(userId) {
   }
 }
 
-/* QR CODE — PORTRAIT CARD DESIGN (FIX POINT 3) */
+/* QR CODE — PORTRAIT CARD DESIGN */
 function buildQRCarCanvas(user, qrCanvas) {
   var c = document.createElement('canvas');
   var ctx = c.getContext('2d');
-  // Portrait size
   c.width = 320; c.height = 480;
 
-  // Background
   ctx.fillStyle = '#FFFFFF'; 
   ctx.fillRect(0, 0, c.width, c.height);
 
-  // Header Gradient
   var grad = ctx.createLinearGradient(0, 0, c.width, 0);
   grad.addColorStop(0, '#0F766E'); grad.addColorStop(1, '#115E59');
   ctx.fillStyle = grad; 
   ctx.fillRect(0, 0, c.width, 60);
 
-  // Header Text
   ctx.fillStyle = '#FFFFFF'; 
   ctx.font = 'bold 14px sans-serif'; 
   ctx.textAlign = 'center'; 
   ctx.fillText('KARTU ABSENSI', c.width/2, 35);
 
-  // Avatar Circle
   var avatarSize = 60;
   var avatarY = 90;
   ctx.beginPath();
   ctx.arc(c.width/2, avatarY, avatarSize/2, 0, 2 * Math.PI);
   ctx.fillStyle = getAvatarColor(user.nama);
   ctx.fill();
-  // Avatar Text
   ctx.fillStyle = '#FFFFFF';
   ctx.font = 'bold 20px sans-serif';
   ctx.textBaseline = 'middle';
   ctx.fillText(getInitials(user.nama), c.width/2, avatarY);
-  ctx.textBaseline = 'alphabetic'; // reset
+  ctx.textBaseline = 'alphabetic';
 
-  // Name
   ctx.fillStyle = '#1C1917'; 
   ctx.font = 'bold 18px sans-serif'; 
   ctx.textAlign = 'center';
   ctx.fillText(user.nama, c.width/2, 170);
 
-  // Details (Desa & Kelompok)
   ctx.fillStyle = '#78716C'; 
   ctx.font = '12px sans-serif'; 
   ctx.fillText(user.desa, c.width/2, 195);
   ctx.fillText('Kelompok: ' + user.kelompok, c.width/2, 215);
 
-  // QR Code (Centered below text)
   var qrSize = 180;
   var qrY = 240;
   var qrX = (c.width - qrSize) / 2;
   
-  // QR Border
   ctx.strokeStyle = '#E7E5E4';
   ctx.lineWidth = 2;
   ctx.strokeRect(qrX-5, qrY-5, qrSize+10, qrSize+10);
   
   ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
 
-  // Jenjang Badge
   if(user.jenjang) {
     ctx.fillStyle = '#CCFBF1';
     ctx.beginPath();
@@ -1071,7 +1225,6 @@ function buildQRCarCanvas(user, qrCanvas) {
     ctx.fillText(user.jenjang, c.width/2, qrY + qrSize + 32);
   }
 
-  // Footer
   ctx.fillStyle = '#F0EEEB'; 
   ctx.fillRect(0, c.height - 30, c.width, 30);
   ctx.fillStyle = '#B8B4AF'; 
@@ -1111,7 +1264,6 @@ async function quickDownloadQR(userId) {
   } catch(e) { showToast(e.message || 'Gagal membuat QR', 'error'); }
 }
 
-/* PRINT FUNCTIONS (Updated for Portrait) */
 function printSingleQR() {
   if (!S.currentQRUser || !S.currentQRDataUrl) { showToast('Buka preview QR terlebih dahulu', 'warning'); return; }
   var user = S.currentQRUser, dataUrl = S.currentQRDataUrl;
@@ -1121,8 +1273,7 @@ function printSingleQR() {
   var w = window.open('', '_blank');
   if (!w) { showToast('Popup diblokir! Izinkan popup.', 'error'); return; }
 
-  // Print Styles optimized for Portrait cards on grid
-  w.document.write('<!DOCTYPE html><html><head><title>Kartu QR - ' + user.nama + '</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>@import url(\'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap\');*{box-sizing:border-box;margin:0;padding:0}body{font-family:\'Plus Jakarta Sans\',sans-serif;background:#eae7e2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}.cp{background:#fff;border-radius:12px;overflow:hidden;width:320px;border:1px solid #d6d3cb;box-shadow:0 4px 20px rgba(0,0,0,.08);page-break-inside:avoid;margin:0 auto}.ch{background:linear-gradient(135deg,#0F766E 0%,#115E59 100%);padding:15px;text-align:center}.ch h2{color:#fff;font-size:14px;font-weight:700}.ca{width:60px;height:60px;border-radius:50%;margin:20px auto 10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:20px;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12)}.cn{font-size:18px;font-weight:900;color:#1C1917;text-align:center;margin-bottom:5px;word-wrap:break-word}.cd{font-size:12px;color:#78716C;text-align:center;margin-bottom:20px}.cq{text-align:center;padding:0 20px}.cq img{width:180px;height:180px;border:1px solid #eee;border-radius:8px}.cf{background:#FAFAF8;padding:8px 15px;display:flex;justify-content:space-between;font-size:9px;color:#b8b4af;border-top:1px solid #eee}.pb{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0ddd8;padding:14px 30px;text-align:center;z-index:100}.ba{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}.ba.p{background:#0F766E;color:#fff}@media print{body{background:#fff;padding:0;display:block}.cp{width:100%;max-width:320px;margin:10px auto;border:1px solid #ccc;box-shadow:none;float:left}.pb{display:none!important}@page{margin:5mm;size:auto}}</style></head><body><div class="cp"><div class="ch"><h2>KARTU ABSENSI QR</h2></div><div class="ca" style="background:' + color + '">' + initials + '</div><div class="cn">' + user.nama + '</div><div class="cd">' + user.desa + ' &bull; ' + user.kelompok + (user.jenjang?' &bull; '+user.jenjang:'') + '</div><div class="cq"><img src="' + dataUrl + '" alt="QR"></div><div class="cf"><span>' + (user.daerah||'') + '</span><span>' + todayStr() + '</span></div></div><div class="pb"><button class="ba p" onclick="window.print()"><i class="fa-solid fa-print"></i> Cetak Kartu</button><button class="ba" style="background:#F5F3EF;color:#57534E;margin-left:10px" onclick="window.close()"><i class="fa-solid fa-xmark"></i> Tutup</button></div></body></html>');
+  w.document.write('<!DOCTYPE html><html><head><title>Kartu QR - ' + user.nama + '</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>@import url(\'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap\');*{box-sizing:border-box;margin:0;padding:0}body{font-family:\'Plus Jakarta Sans\',sans-serif;background:#eae7e2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}.cp{background:#fff;border-radius:12px;overflow:hidden;width:320px;border:1px solid #d6d3cb;box-shadow:0 4px 20px rgba(0,0,0,.08);page-break-inside:avoid;margin:0 auto}.ch{background:linear-gradient(135deg,#0F766E 0%,#115E59 100%);padding:15px;text-align:center}.ch h2{color:#fff;font-size:14px;font-weight:700}.ca{width:60px;height:60px;border-radius:50%;margin:20px auto 10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:20px;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12)}.cn{font-size:18px;font-weight:900;color:#1C1917;text-align:center;margin-bottom:5px;word-wrap:break-word}.cd{font-size:12px;color:#78716C;text-align:center;margin-bottom:20px}.cq{text-align:center;padding:0 20px}.cq img{width:180px;height:180px;border:1px solid #eee;border-radius:8px}.cf{background:#FAFAF8;padding:8px 15px;display:flex;justify-content:space-between;font-size:9px;color:#b8b4af;border-top:1px solid #eee}.pb{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0ddd8;padding:14px 30px;text-align:center;z-index:100}.ba{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}.ba.p{background:#0F766E;color:#fff}@media print{body{background:#fff;padding:0;display:block}.cp{width:100%;max-width:320px;margin:10px auto;border:1px solid #ccc;box-shadow:none}.pb{display:none!important}@page{margin:5mm;size:auto}}</style></head><body><div class="cp"><div class="ch"><h2>KARTU ABSENSI QR</h2></div><div class="ca" style="background:' + color + '">' + initials + '</div><div class="cn">' + user.nama + '</div><div class="cd">' + user.desa + ' &bull; ' + user.kelompok + (user.jenjang?' &bull; '+user.jenjang:'') + '</div><div class="cq"><img src="' + dataUrl + '" alt="QR"></div><div class="cf"><span>' + (user.daerah||'') + '</span><span>' + todayStr() + '</span></div></div><div class="pb"><button class="ba p" onclick="window.print()"><i class="fa-solid fa-print"></i> Cetak Kartu</button><button class="ba" style="background:#F5F3EF;color:#57534E;margin-left:10px" onclick="window.close()"><i class="fa-solid fa-xmark"></i> Tutup</button></div></body></html>');
   w.document.close();
 }
 
@@ -1161,7 +1312,6 @@ async function printAllQR() {
   });
 
   w.document.open();
-  // CSS Grid for Portrait Cards
   w.document.write('<!DOCTYPE html><html><head><title>Cetak Kartu QR - ' + fl + '</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>@import url(\'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap\');*{box-sizing:border-box;margin:0;padding:0}body{font-family:\'Plus Jakarta Sans\',sans-serif;background:#f0eeeb;padding:20px;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}.pt{text-align:center;font-size:22px;font-weight:800;color:#115E59;margin-bottom:4px}.ps{text-align:center;font-size:12px;color:#888;margin-bottom:24px}.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto}.cp{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e0ddd8;page-break-inside:avoid;box-shadow:0 1px 4px rgba(0,0,0,.06)}.ch{background:linear-gradient(135deg,#0F766E,#115E59);padding:15px;text-align:center}.ch h2{color:#fff;font-size:14px;font-weight:700}.ca{width:60px;height:60px;border-radius:50%;margin:20px auto 10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:20px;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.12)}.cn{font-size:18px;font-weight:900;color:#1C1917;text-align:center;margin-bottom:5px;word-wrap:break-word}.cd{font-size:12px;color:#78716C;text-align:center;margin-bottom:20px}.cq{text-align:center}.cq img{width:160px;height:160px;border:1px solid #eee;border-radius:8px}.cf{background:#FAFAF8;padding:8px 15px;display:flex;justify-content:space-between;font-size:9px;color:#b8b4af;border-top:1px solid #eee}.pb{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0ddd8;padding:14px 30px;text-align:center;z-index:100;box-shadow:0 -4px 16px rgba(0,0,0,.08)}.bp{display:inline-flex;align-items:center;gap:8px;padding:12px 36px;background:#0F766E;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer}.bp:hover{background:#115E59}@media print{body{background:#fff;padding:10px}.pt{font-size:16px;margin-bottom:2px}.ps{font-size:10px;margin-bottom:16px}.cg{gap:15px;max-width:100%}.cp{border:1px solid #ccc;box-shadow:none}.cq img{width:140px;height:140px}.pb{display:none!important}@page{margin:10mm}}</style></head><body><div><div class="pt">Kartu Absensi QR Code</div><div class="ps">' + fl + ' — ' + items.length + ' anggota — ' + todayStr() + '</div><div class="cg">' + ch + '</div></div><div class="pb"><button class="bp" onclick="window.print()"><i class="fa-solid fa-print"></i> Cetak Kartu</button></div></body></html>');
   w.document.close();
 }
